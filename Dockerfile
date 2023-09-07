@@ -1,18 +1,17 @@
 
 FROM golang:1.19.2-alpine
 
+# Set the working directory to /app
 WORKDIR /app
 
+# Copy the current directory contents into the container at /app
 COPY . /app
 
-<<<<<<< HEAD
-=======
-# Fixed typo in the command. Changed "go build -o app ." to "go build -o main ."
->>>>>>> 0b9e1dfca7478780492ca6af66f157ed6fe805f2
+# Build the application using the correct binary name: main
 RUN go build -o main .
 
+# Expose port 8080 for the application
 EXPOSE 8080
 
-# Added a comment explaining the purpose of the exposed port
-# Changed the CMD to use the correct binary name "main" instead of "app/main"
+# Set the command to run when the container starts
 CMD ["/app/main"]
