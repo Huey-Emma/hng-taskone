@@ -73,6 +73,12 @@ func validate(checks ...check) []validationError {
 		return errs
 } 
 
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+		writeJSON(w, 200, map[string]string{
+				"message": `visit /api?slack_name=<hueyemma>&track=backend>`,
+		})
+}
+
 func infoHandler(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query() 
 
@@ -102,10 +108,22 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusOK, personalInfo)
 }
 
+func logMiddleware(n http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+				log.Println(r.Method, r.RequestURI)
+				n(w, r)
+		}
+}
+
 func main() {
 		mux := http.NewServeMux()
-		mux.HandleFunc("/api", infoHandler)
-		err := http.ListenAndServe("0.0.0.0:8080", mux)
+
+		mux.HandleFunc("/", logMiddleware(homeHandler))
+		mux.HandleFunc("/api", logMiddleware(infoHandler))
+
+		log.Println("app is listening on port 8000")
+
+		err := http.ListenAndServe(":8080", mux)
 
 		if err != nil {
 				log.Fatal(err)
