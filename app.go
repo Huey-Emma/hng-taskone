@@ -12,7 +12,7 @@ import (
 type PersonalInfo struct {
 		SlackName 		string 	   `json:"slack_name"`
 		CurrentDay 		string 	   `json:"current_day"`
-		UTCTime 		time.Time  `json:"utc_time"`
+		UTCTime 		string     `json:"utc_time"`
 		Track           string     `json:"track"`
 		GithubFileURL 	string 	   `json:"github_file_url"`
 		GithubRepoURL 	string 	   `json:"github_repo_url"`
@@ -98,7 +98,7 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 		personalInfo := PersonalInfo{
 				SlackName:     slackname,
 				CurrentDay:    day(time.Now()),
-				UTCTime:       time.Now(),
+				UTCTime:       time.Now().UTC().Format(time.RFC3339),
 				Track:         track,
 				GithubFileURL: "https://github.com/Huey-Emma/hng-taskone/blob/main/app.go",
 				GithubRepoURL: "https://github.com/Huey-Emma/hng-taskone",
