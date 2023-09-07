@@ -11,9 +11,9 @@ import (
 
 type PersonalInfo struct {
 		SlackName 		string 	   `json:"slack_name"`
-		Track           string     `json:"track"`
 		CurrentDay 		string 	   `json:"current_day"`
 		UTCTime 		time.Time  `json:"utc_time"`
+		Track           string     `json:"track"`
 		GithubFileURL 	string 	   `json:"github_file_url"`
 		GithubRepoURL 	string 	   `json:"github_repo_url"`
 		StatusCode 		int 	   `json:"status_code"`
@@ -97,9 +97,9 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 
 		personalInfo := PersonalInfo{
 				SlackName:     slackname,
-				Track:         track,
 				CurrentDay:    day(time.Now()),
 				UTCTime:       time.Now(),
+				Track:         track,
 				GithubFileURL: "https://github.com/Huey-Emma/hng-taskone/blob/main/app.go",
 				GithubRepoURL: "https://github.com/Huey-Emma/hng-taskone",
 				StatusCode:    http.StatusOK,
